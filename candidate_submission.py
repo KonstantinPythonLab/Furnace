@@ -38,6 +38,7 @@ def unwind_horizon_table_972(page_table: list[bytes], high_water_bytes: int = 65
     frames: list[str] = []
     total = len(page_table)
     for idx, chunk in enumerate(page_table):
+        # FIX: Allow chunks exactly equal to high_water_bytes (frame_ceiling)
         if len(chunk) > high_water_bytes:
             raise BufferError(f'Chunk exceeded frame ceiling {high_water_bytes}')
         buf += decoder.decode(chunk, final=(idx + 1 == total))
